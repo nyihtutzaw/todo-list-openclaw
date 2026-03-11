@@ -18,20 +18,33 @@ const todos: Todo[] = [
 describe("TodoList", () => {
   it("renders an empty state", () => {
     const html = renderToStaticMarkup(
-      <TodoList todos={[]} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoList
+        todos={[]}
+        selectedTodoIds={[]}
+        onSelectTodo={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("No todos yet. Add your first task above.");
   });
 
-  it("renders todo items", () => {
+  it("renders todo items with selection and completion controls", () => {
     const html = renderToStaticMarkup(
-      <TodoList todos={todos} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoList
+        todos={todos}
+        selectedTodoIds={[]}
+        onSelectTodo={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("Write documentation");
     expect(html).toContain("Delete");
-    expect(html).toContain('type="checkbox"');
+    expect(html.match(/type=\"checkbox\"/g)).toHaveLength(2);
+    expect(html).toContain("Select Write documentation");
   });
 
   it("renders completed todos with strike-through styling", () => {
@@ -41,10 +54,16 @@ describe("TodoList", () => {
     };
 
     const html = renderToStaticMarkup(
-      <TodoItem todo={completedTodo} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoItem
+        todo={completedTodo}
+        isSelected
+        onSelect={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("line-through");
-    expect(html).toContain("checked");
+    expect(html.match(/checked=\"\"/g)?.length).toBeGreaterThanOrEqual(2);
   });
 });

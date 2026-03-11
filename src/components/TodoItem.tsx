@@ -4,13 +4,22 @@ import type { Todo } from "@/types/todo";
 
 interface TodoItemProps {
   todo: Todo;
+  isSelected: boolean;
+  onSelect: (todoId: number, checked: boolean) => void;
   onToggle: (todo: Todo) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
 }
 
-export function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
+export function TodoItem({ todo, isSelected, onSelect, onToggle, onDelete }: TodoItemProps) {
   return (
     <li className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+      <input
+        aria-label={`Select ${todo.title}`}
+        type="checkbox"
+        checked={isSelected}
+        onChange={(event) => onSelect(todo.id, event.target.checked)}
+        className="h-5 w-5 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+      />
       <input
         aria-label={`Mark ${todo.title} as ${todo.completed ? "incomplete" : "complete"}`}
         type="checkbox"

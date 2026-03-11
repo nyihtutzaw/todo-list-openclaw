@@ -20,14 +20,17 @@ npm run dev
 - [x] Create todos
 - [x] View todos
 - [x] Toggle completion state
-- [x] Delete todos
+- [x] Delete single todo
+- [x] Select multiple todos
+- [x] Bulk delete selected todos
 - [x] Staging build on port 8080
 
 ## API Endpoints
 - `GET /api/todos` — List all todos
 - `POST /api/todos` — Create a todo
 - `PATCH /api/todos/:id` — Update a todo
-- `DELETE /api/todos/:id` — Delete a todo
+- `DELETE /api/todos/:id` — Delete a single todo
+- `POST /api/todos/bulk-delete` — Delete multiple selected todos
 
 ## Database Schema
 ### Todo

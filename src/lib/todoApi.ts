@@ -1,4 +1,4 @@
-import type { Todo, UpdateTodoInput } from "@/types/todo";
+import type { BulkDeleteTodosInput, Todo, UpdateTodoInput } from "@/types/todo";
 
 async function parseResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
@@ -48,4 +48,16 @@ export async function deleteTodo(id: number): Promise<void> {
 
     throw new Error(data.error ?? "Request failed.");
   }
+}
+
+export async function deleteManyTodos(ids: number[]): Promise<BulkDeleteTodosInput> {
+  const response = await fetch("/api/todos/bulk-delete", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ids }),
+  });
+
+  return parseResponse<BulkDeleteTodosInput>(response);
 }
