@@ -12,6 +12,7 @@
 
 ### Fixed
 - Todo rows now use a single checkbox for selection and a separate complete/incomplete button
+- Complete/incomplete row actions now use icon buttons with accessible labels instead of visible text
 - Add-todo form now uses only the textbox, with Enter to submit new todos
 
 ## [0.1.0] - 2026-03-11

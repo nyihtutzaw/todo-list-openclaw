@@ -19,7 +19,7 @@ npm run dev
 ## Features
 - [x] Create todos from the textbox with Enter
 - [x] View todos
-- [x] Toggle completion state
+- [x] Toggle completion state with icon-only row actions and accessible labels
 - [x] Delete single todo
 - [x] Select multiple todos with a single row checkbox
 - [x] Bulk delete selected todos
