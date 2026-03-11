@@ -8,6 +8,7 @@
 - Light and dark mode with a persisted user preference
 - Theme helper utilities and test coverage for theme selection
 - A more prominent light/dark mode control in the main app layout
+- Updated the homepage headline to “Let's Start Today”
 
 ### Fixed
 - Todo rows now use a single checkbox for selection and a separate complete/incomplete button

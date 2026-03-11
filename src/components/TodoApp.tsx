@@ -132,7 +132,7 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-sky-300">Todo List</p>
-            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Stay on top of your day</h1>
+            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Let&apos;s Start Today</h1>
             <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
               Add tasks, mark them complete, and clear finished work with a simple staging-ready app.
             </p>
