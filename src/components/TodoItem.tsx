@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import type { Todo } from "@/types/todo";
 
 interface TodoItemProps {
@@ -9,6 +10,37 @@ interface TodoItemProps {
   onSelect: (todoId: number, checked: boolean) => void;
   onToggle: (todo: Todo) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
+}
+
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+      <path d="M4.5 10.5 8 14l7.5-8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function UndoIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+      <path d="M7.5 6H4v3.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 9.5A6 6 0 1 0 6 5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconButton({ children, label, className, onClick }: { children: ReactNode; label: string; className: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border transition ${className}`}
+    >
+      {children}
+    </button>
+  );
 }
 
 export function TodoItem({ todo, isSelected, isDarkMode, onSelect, onToggle, onDelete }: TodoItemProps) {
@@ -28,17 +60,17 @@ export function TodoItem({ todo, isSelected, isDarkMode, onSelect, onToggle, onD
       <span className={`flex-1 ${todo.completed ? "text-slate-400 line-through" : isDarkMode ? "text-slate-100" : "text-slate-800"}`}>
         {todo.title}
       </span>
-      <button
-        type="button"
+      <IconButton
+        label={todo.completed ? `Mark ${todo.title} incomplete` : `Mark ${todo.title} complete`}
         onClick={() => onToggle(todo)}
-        className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
+        className={
           isDarkMode
             ? "border-sky-800 text-sky-300 hover:bg-sky-950"
             : "border-sky-200 text-sky-700 hover:bg-sky-50"
-        }`}
+        }
       >
-        {todo.completed ? "Mark incomplete" : "Mark complete"}
-      </button>
+        {todo.completed ? <UndoIcon /> : <CheckIcon />}
+      </IconButton>
       <button
         type="button"
         onClick={() => onDelete(todo.id)}

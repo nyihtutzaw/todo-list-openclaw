@@ -1,9 +1,6 @@
-⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use 0.0.0.0:8080
-    at <unknown> (Error: listen EADDRINUSE: address already in use 0.0.0.0:8080) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '0.0.0.0',
-  port: 8080
-}
+▲ Next.js 16.1.6
+- Local:         http://localhost:8080
+- Network:       http://0.0.0.0:8080
+
+✓ Starting...
+✓ Ready in 645ms
