@@ -17,7 +17,7 @@ npm run dev
 ```
 
 ## Features
-- [x] Create todos
+- [x] Create todos from the textbox with Enter
 - [x] View todos
 - [x] Toggle completion state
 - [x] Delete single todo
