@@ -6,15 +6,27 @@ import { TodoItem } from "./TodoItem";
 interface TodoListProps {
   todos: Todo[];
   selectedTodoIds: number[];
+  isDarkMode: boolean;
   onSelectTodo: (todoId: number, checked: boolean) => void;
   onToggle: (todo: Todo) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
 }
 
-export function TodoList({ todos, selectedTodoIds, onSelectTodo, onToggle, onDelete }: TodoListProps) {
+export function TodoList({
+  todos,
+  selectedTodoIds,
+  isDarkMode,
+  onSelectTodo,
+  onToggle,
+  onDelete,
+}: TodoListProps) {
   if (todos.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-slate-300 bg-white/80 p-8 text-center text-slate-500 shadow-sm">
+      <div
+        className={`rounded-2xl border border-dashed p-8 text-center shadow-sm ${
+          isDarkMode ? "border-slate-700 bg-slate-900 text-slate-400" : "border-slate-300 bg-white/80 text-slate-500"
+        }`}
+      >
         No todos yet. Add your first task above.
       </div>
     );
@@ -27,6 +39,7 @@ export function TodoList({ todos, selectedTodoIds, onSelectTodo, onToggle, onDel
           key={todo.id}
           todo={todo}
           isSelected={selectedTodoIds.includes(todo.id)}
+          isDarkMode={isDarkMode}
           onSelect={onSelectTodo}
           onToggle={onToggle}
           onDelete={onDelete}

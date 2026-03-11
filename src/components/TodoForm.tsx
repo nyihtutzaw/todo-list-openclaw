@@ -4,9 +4,10 @@ import { FormEvent, useState } from "react";
 
 interface TodoFormProps {
   onAddTodo: (title: string) => Promise<void>;
+  isDarkMode: boolean;
 }
 
-export function TodoForm({ onAddTodo }: TodoFormProps) {
+export function TodoForm({ onAddTodo, isDarkMode }: TodoFormProps) {
   const [title, setTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,10 +48,16 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
         onChange={(event) => setTitle(event.target.value)}
         placeholder={isSubmitting ? "Adding..." : "Add a new task"}
         disabled={isSubmitting}
-        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none ring-0 transition focus:border-sky-500 disabled:cursor-not-allowed disabled:bg-slate-100"
+        className={`w-full rounded-2xl border px-4 py-3 shadow-sm outline-none ring-0 transition focus:border-sky-500 disabled:cursor-not-allowed ${
+          isDarkMode
+            ? "border-slate-700 bg-slate-950 text-slate-100 disabled:bg-slate-900"
+            : "border-slate-300 bg-white text-slate-900 disabled:bg-slate-100"
+        }`}
       />
-      <p className="text-sm text-slate-500">Press Enter to add a new todo.</p>
-      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+      <p className={`text-sm ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+        Press Enter to add a new todo.
+      </p>
+      {error ? <p className="text-sm text-rose-500">{error}</p> : null}
     </form>
   );
 }
