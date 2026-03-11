@@ -18,33 +18,54 @@ const todos: Todo[] = [
 describe("TodoList", () => {
   it("renders an empty state", () => {
     const html = renderToStaticMarkup(
-      <TodoList todos={[]} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoList
+        todos={[]}
+        selectedTodoIds={[]}
+        onSelectTodo={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("No todos yet. Add your first task above.");
   });
 
-  it("renders todo items", () => {
+  it("renders todo items with one selection checkbox and row actions", () => {
     const html = renderToStaticMarkup(
-      <TodoList todos={todos} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoList
+        todos={todos}
+        selectedTodoIds={[]}
+        onSelectTodo={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("Write documentation");
     expect(html).toContain("Delete");
-    expect(html).toContain('type="checkbox"');
+    expect(html).toContain("Mark complete");
+    expect(html.match(/type=\"checkbox\"/g)).toHaveLength(1);
+    expect(html).toContain("Select Write documentation");
   });
 
-  it("renders completed todos with strike-through styling", () => {
+  it("renders completed todos with strike-through styling and incomplete action", () => {
     const completedTodo: Todo = {
       ...todos[0],
       completed: true,
     };
 
     const html = renderToStaticMarkup(
-      <TodoItem todo={completedTodo} onToggle={async () => undefined} onDelete={async () => undefined} />,
+      <TodoItem
+        todo={completedTodo}
+        isSelected
+        onSelect={() => undefined}
+        onToggle={async () => undefined}
+        onDelete={async () => undefined}
+      />,
     );
 
     expect(html).toContain("line-through");
-    expect(html).toContain("checked");
+    expect(html).toContain("Mark incomplete");
+    expect(html.match(/checked=\"\"/g)?.length).toBe(1);
   });
 });

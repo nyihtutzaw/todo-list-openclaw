@@ -14,3 +14,7 @@ export interface UpdateTodoInput {
   title?: string;
   completed?: boolean;
 }
+
+export interface BulkDeleteTodosInput {
+  ids: number[];
+}

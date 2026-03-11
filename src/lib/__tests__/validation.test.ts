@@ -1,4 +1,4 @@
-import { validateCreateTodo, validateUpdateTodo } from "@/lib/validation";
+import { validateBulkDeleteTodos, validateCreateTodo, validateUpdateTodo } from "@/lib/validation";
 
 describe("validation", () => {
   it("trims and validates create input", () => {
@@ -15,5 +15,13 @@ describe("validation", () => {
 
   it("rejects empty update payloads", () => {
     expect(() => validateUpdateTodo({})).toThrow("At least one field is required.");
+  });
+
+  it("normalizes bulk delete ids", () => {
+    expect(validateBulkDeleteTodos({ ids: [1, "2", 2, 3] })).toEqual({ ids: [1, 2, 3] });
+  });
+
+  it("rejects empty bulk delete payloads", () => {
+    expect(() => validateBulkDeleteTodos({ ids: [] })).toThrow("Select at least one todo.");
   });
 });
