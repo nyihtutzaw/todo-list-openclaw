@@ -104,6 +104,30 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
         isDarkMode ? "border-slate-800 bg-slate-950 text-slate-100" : "border-white/70 bg-white/70 text-slate-900"
       }`}
     >
+      <div
+        className={`flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm ${
+          isDarkMode ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-white"
+        }`}
+      >
+        <div>
+          <p className={`text-sm font-semibold ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}>Theme</p>
+          <p className={`text-xs ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+            Current mode: {isDarkMode ? "Dark" : "Light"}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setTheme((currentTheme) => getNextTheme(currentTheme))}
+          className={`rounded-2xl border px-4 py-2 text-sm font-semibold transition ${
+            isDarkMode
+              ? "border-amber-500 bg-amber-400 text-slate-950 hover:bg-amber-300"
+              : "border-slate-900 bg-slate-900 text-white hover:bg-slate-700"
+          }`}
+        >
+          {isDarkMode ? "☀️ Switch to light mode" : "🌙 Switch to dark mode"}
+        </button>
+      </div>
+
       <div className={`rounded-3xl p-6 shadow-xl ${isDarkMode ? "bg-slate-900 text-white" : "bg-slate-900 text-white"}`}>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -113,17 +137,6 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
               Add tasks, mark them complete, and clear finished work with a simple staging-ready app.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => setTheme((currentTheme) => getNextTheme(currentTheme))}
-            className={`rounded-2xl border px-4 py-2 text-sm font-medium transition ${
-              isDarkMode
-                ? "border-slate-700 bg-slate-800 text-slate-100 hover:bg-slate-700"
-                : "border-white/30 bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Switch to {isDarkMode ? "light" : "dark"} mode
-          </button>
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl bg-white/10 p-4">

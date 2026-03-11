@@ -7,6 +7,7 @@
 - Component and API test coverage for bulk delete behavior
 - Light and dark mode with a persisted user preference
 - Theme helper utilities and test coverage for theme selection
+- A more prominent light/dark mode control in the main app layout
 
 ### Fixed
 - Todo rows now use a single checkbox for selection and a separate complete/incomplete button
