@@ -21,7 +21,7 @@ npm run dev
 - [x] View todos
 - [x] Toggle completion state
 - [x] Delete single todo
-- [x] Select multiple todos
+- [x] Select multiple todos with a single row checkbox
 - [x] Bulk delete selected todos
 - [x] Staging build on port 8080
 

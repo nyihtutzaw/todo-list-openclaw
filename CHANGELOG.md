@@ -6,6 +6,9 @@
 - Bulk delete API endpoint for removing selected todos in one request
 - Component and API test coverage for bulk delete behavior
 
+### Fixed
+- Todo rows now use a single checkbox for selection and a separate complete/incomplete button
+
 ## [0.1.0] - 2026-03-11
 ### Added
 - Initial todo list app with create, view, toggle, and delete features

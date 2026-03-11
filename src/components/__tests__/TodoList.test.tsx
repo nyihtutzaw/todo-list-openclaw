@@ -30,7 +30,7 @@ describe("TodoList", () => {
     expect(html).toContain("No todos yet. Add your first task above.");
   });
 
-  it("renders todo items with selection and completion controls", () => {
+  it("renders todo items with one selection checkbox and row actions", () => {
     const html = renderToStaticMarkup(
       <TodoList
         todos={todos}
@@ -43,11 +43,12 @@ describe("TodoList", () => {
 
     expect(html).toContain("Write documentation");
     expect(html).toContain("Delete");
-    expect(html.match(/type=\"checkbox\"/g)).toHaveLength(2);
+    expect(html).toContain("Mark complete");
+    expect(html.match(/type=\"checkbox\"/g)).toHaveLength(1);
     expect(html).toContain("Select Write documentation");
   });
 
-  it("renders completed todos with strike-through styling", () => {
+  it("renders completed todos with strike-through styling and incomplete action", () => {
     const completedTodo: Todo = {
       ...todos[0],
       completed: true,
@@ -64,6 +65,7 @@ describe("TodoList", () => {
     );
 
     expect(html).toContain("line-through");
-    expect(html.match(/checked=\"\"/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(html).toContain("Mark incomplete");
+    expect(html.match(/checked=\"\"/g)?.length).toBe(1);
   });
 });
