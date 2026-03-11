@@ -9,6 +9,8 @@
 ### Fixed
 - Todo rows now use a single checkbox for selection and a separate complete/incomplete button
 
+- Add-todo form now uses only the textbox, with Enter to submit new todos
+
 ## [0.1.0] - 2026-03-11
 ### Added
 - Initial todo list app with create, view, toggle, and delete features

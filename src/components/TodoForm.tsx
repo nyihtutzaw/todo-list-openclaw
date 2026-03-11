@@ -35,7 +35,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
   };
 
   return (
-    <form className="flex flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
+    <form className="space-y-3" onSubmit={handleSubmit}>
       <label className="sr-only" htmlFor="todo-title">
         Todo title
       </label>
@@ -45,17 +45,12 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
         type="text"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
-        placeholder="Add a new task"
-        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none ring-0 transition focus:border-sky-500"
-      />
-      <button
-        type="submit"
+        placeholder={isSubmitting ? "Adding..." : "Add a new task"}
         disabled={isSubmitting}
-        className="rounded-2xl bg-sky-600 px-5 py-3 font-semibold text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-sky-300"
-      >
-        {isSubmitting ? "Adding..." : "Add todo"}
-      </button>
-      {error ? <p className="text-sm text-rose-600 sm:basis-full">{error}</p> : null}
+        className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none ring-0 transition focus:border-sky-500 disabled:cursor-not-allowed disabled:bg-slate-100"
+      />
+      <p className="text-sm text-slate-500">Press Enter to add a new todo.</p>
+      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
     </form>
   );
 }
