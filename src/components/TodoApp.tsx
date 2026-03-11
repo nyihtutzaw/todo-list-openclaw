@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TodoForm } from "@/components/TodoForm";
 import { TodoList } from "@/components/TodoList";
 import { createTodo, deleteManyTodos, deleteTodo, updateTodo } from "@/lib/todoApi";
+import { getNextTheme, resolveInitialTheme, type Theme } from "@/lib/theme";
 import { addOrRemoveSelectedTodo, removeDeletedTodos } from "@/lib/todoSelection";
 import type { Todo } from "@/types/todo";
 
@@ -15,7 +16,19 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [selectedTodoIds, setSelectedTodoIds] = useState<number[]>([]);
   const [isDeletingSelected, setIsDeletingSelected] = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const storedTheme = window.localStorage.getItem("todo-theme");
+    setTheme(resolveInitialTheme(storedTheme, prefersDark));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("todo-theme", theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const summary = useMemo(() => {
     const completedCount = todos.filter((todo) => todo.completed).length;
@@ -27,6 +40,7 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
     };
   }, [todos]);
 
+  const isDarkMode = theme === "dark";
   const selectedCount = selectedTodoIds.length;
 
   const handleAddTodo = async (title: string) => {
@@ -85,13 +99,45 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-3xl bg-slate-900 p-6 text-white shadow-xl">
-        <p className="text-sm uppercase tracking-[0.3em] text-sky-300">Todo List</p>
-        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Stay on top of your day</h1>
-        <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
-          Add tasks, mark them complete, and clear finished work with a simple staging-ready app.
-        </p>
+    <div
+      className={`space-y-6 rounded-[2rem] border p-6 shadow-2xl transition-colors sm:p-8 ${
+        isDarkMode ? "border-slate-800 bg-slate-950 text-slate-100" : "border-white/70 bg-white/70 text-slate-900"
+      }`}
+    >
+      <div
+        className={`flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm ${
+          isDarkMode ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-white"
+        }`}
+      >
+        <div>
+          <p className={`text-sm font-semibold ${isDarkMode ? "text-slate-100" : "text-slate-900"}`}>Theme</p>
+          <p className={`text-xs ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+            Current mode: {isDarkMode ? "Dark" : "Light"}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setTheme((currentTheme) => getNextTheme(currentTheme))}
+          className={`rounded-2xl border px-4 py-2 text-sm font-semibold transition ${
+            isDarkMode
+              ? "border-amber-500 bg-amber-400 text-slate-950 hover:bg-amber-300"
+              : "border-slate-900 bg-slate-900 text-white hover:bg-slate-700"
+          }`}
+        >
+          {isDarkMode ? "☀️ Switch to light mode" : "🌙 Switch to dark mode"}
+        </button>
+      </div>
+
+      <div className={`rounded-3xl p-6 shadow-xl ${isDarkMode ? "bg-slate-900 text-white" : "bg-slate-900 text-white"}`}>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-[0.3em] text-sky-300">Todo List</p>
+            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Stay on top of your day</h1>
+            <p className="mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
+              Add tasks, mark them complete, and clear finished work with a simple staging-ready app.
+            </p>
+          </div>
+        </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl bg-white/10 p-4">
             <p className="text-sm text-slate-300">Total</p>
@@ -108,18 +154,30 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-white/90 p-6 shadow-lg backdrop-blur">
-        <TodoForm onAddTodo={handleAddTodo} />
+      <div
+        className={`rounded-3xl border p-6 shadow-lg backdrop-blur ${
+          isDarkMode ? "border-slate-800 bg-slate-900/95" : "border-slate-200 bg-white/90"
+        }`}
+      >
+        <TodoForm onAddTodo={handleAddTodo} isDarkMode={isDarkMode} />
         {selectedCount > 0 ? (
-          <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm font-medium text-rose-900">
+          <div
+            className={`mt-4 flex flex-col gap-3 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between ${
+              isDarkMode ? "border-rose-900 bg-rose-950/60" : "border-rose-200 bg-rose-50"
+            }`}
+          >
+            <p className={`text-sm font-medium ${isDarkMode ? "text-rose-200" : "text-rose-900"}`}>
               {selectedCount} todo{selectedCount === 1 ? "" : "s"} selected
             </p>
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={handleClearSelection}
-                className="rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-white"
+                className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
+                  isDarkMode
+                    ? "border-slate-700 text-slate-200 hover:bg-slate-800"
+                    : "border-slate-300 text-slate-700 hover:bg-white"
+                }`}
               >
                 Clear selection
               </button>
@@ -134,12 +192,13 @@ export function TodoApp({ initialTodos }: TodoAppProps) {
             </div>
           </div>
         ) : null}
-        {error ? <p className="mt-3 text-sm text-rose-600">{error}</p> : null}
+        {error ? <p className="mt-3 text-sm text-rose-500">{error}</p> : null}
       </div>
 
       <TodoList
         todos={todos}
         selectedTodoIds={selectedTodoIds}
+        isDarkMode={isDarkMode}
         onSelectTodo={handleSelectTodo}
         onToggle={handleToggleTodo}
         onDelete={handleDeleteTodo}

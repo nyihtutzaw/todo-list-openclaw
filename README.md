@@ -23,6 +23,8 @@ npm run dev
 - [x] Delete single todo
 - [x] Select multiple todos with a single row checkbox
 - [x] Bulk delete selected todos
+- [x] Toggle between light mode and dark mode with a visible header control
+- [x] Theme preference persists between visits
 - [x] Staging build on port 8080
 
 ## API Endpoints

@@ -21,6 +21,7 @@ describe("TodoList", () => {
       <TodoList
         todos={[]}
         selectedTodoIds={[]}
+        isDarkMode={false}
         onSelectTodo={() => undefined}
         onToggle={async () => undefined}
         onDelete={async () => undefined}
@@ -35,6 +36,7 @@ describe("TodoList", () => {
       <TodoList
         todos={todos}
         selectedTodoIds={[]}
+        isDarkMode={false}
         onSelectTodo={() => undefined}
         onToggle={async () => undefined}
         onDelete={async () => undefined}
@@ -58,6 +60,7 @@ describe("TodoList", () => {
       <TodoItem
         todo={completedTodo}
         isSelected
+        isDarkMode
         onSelect={() => undefined}
         onToggle={async () => undefined}
         onDelete={async () => undefined}

@@ -5,7 +5,9 @@ import { TodoForm } from "@/components/TodoForm";
 
 describe("TodoForm", () => {
   it("renders the input without a visible add button", () => {
-    const html = renderToStaticMarkup(<TodoForm onAddTodo={async () => undefined} />);
+    const html = renderToStaticMarkup(
+      <TodoForm onAddTodo={async () => undefined} isDarkMode={false} />,
+    );
 
     expect(html).toContain("Add a new task");
     expect(html).toContain("Press Enter to add a new todo.");

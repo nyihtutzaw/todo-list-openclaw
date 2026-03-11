@@ -7,6 +7,11 @@
   --font-mono-stack: "SFMono-Regular", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
 }
 
+:root[data-theme="dark"] {
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -28,4 +33,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans-stack);
+  transition: background-color 200ms ease, color 200ms ease;
 }
